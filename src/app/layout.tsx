@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Image from "next/image";
 import { ActiveLink } from "@/ui/atoms/ActiveLink";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -20,7 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <nav className="flex justify-between items-center py-4 px-8 bg-gray-800 text-white">
           <div className="flex items-center">
-            <img src="https://via.placeholder.com/150" alt="Logo" className="h-8 mr-2" />
+            <Image src="https://via.placeholder.com/150" alt="Logo" className="h-8 mr-2" />
             <p className="text-lg font-bold">My App</p>
           </div>
           <ul className="flex justify-center space-x-4">

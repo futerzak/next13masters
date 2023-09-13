@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import { type ProductType } from '@/ui/molecules/Product'
 import { getProductById } from '@/utils/api/productsApi'
 
@@ -19,7 +20,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
                     {product ?
                         <section className="flex justify-between w-full">
                             <article className="w-1/2">
-                                <img src={product.image} alt={product.title} className="w-full" />
+                                <Image src={product.image} alt={product.title} className="w-full" />
                             </article>
                             <article className="w-1/2 px-8">
                                 <h1 className="text-4xl font-bold mb-4">{product.title}</h1>

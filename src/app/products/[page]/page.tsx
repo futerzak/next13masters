@@ -2,6 +2,23 @@ import React from 'react'
 import { fetchProductsWithPagination } from '@/utils/api/productsApi'
 import { type ProductType } from '@/ui/molecules/Product'
 import { ProductsList } from '@/ui/organisms/ProductsList'
+import { pagesCount } from '@/utils/pagesCount'
+
+
+export const generateStaticParams = async () => {
+    const params = []
+    for (let i = 1; i <= pagesCount; i++) {
+        params.push({ page: i.toString() })
+    }
+    return params
+}
+
+export async function generateMetadata({ params }: { params: { page: string } }) {
+    return {
+        title: `Products page ${params.page} - FUTERZAK sklep`,
+        description: 'Products page',
+    }
+}
 
 export default async function PaginationProductList({ params }: { params: { page: number } }) {
     try {
