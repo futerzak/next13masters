@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <nav className="flex justify-between items-center py-4 px-8 bg-gray-800 text-white">
           <div className="flex items-center">
-            <Image src="https://via.placeholder.com/150" alt="Logo" className="h-8 mr-2" />
+            <Image src="https://via.placeholder.com/150" alt="Logo" className="h-8 mr-2" width={150} height={150} />
             <p className="text-lg font-bold">My App</p>
           </div>
           <ul className="flex justify-center space-x-4">

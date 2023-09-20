@@ -2,7 +2,7 @@
 const nextConfig = {
     images: {
         domains: [
-            'placehold.it',
+            'via.placeholder.com',
             'naszsklep-api.vercel.app'
         ]
     },

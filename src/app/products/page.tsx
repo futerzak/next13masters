@@ -8,8 +8,24 @@ export const metadata = {
 };
 
 export default async function ProductsPage() {
+    // const { products } = await executeGraphql(ProductsGetListDocument);
+    // console.log('products: ', products);
+
+    // if (!products) {
+    //     notFound();
+    // }
+
+    // return (
+    //     <main className="flex min-h-screen flex-col items-center justify-between p-24" >
+    //         <section className="flex justify-between" >
+    //             {products.length ? <ProductsList products={products} /> : <p>Products not found</p>}
+    //         </section>
+    //     </main>
+
+    // )
+
     try {
-        const products: ProductType[] | [] = await fetchProductsWithLimit(20)
+        const products: ProductType[] | [] = await fetchProductsWithLimit(4)
         return (
             <main className="flex min-h-screen flex-col items-center justify-between p-24" >
                 <section className="flex justify-between" >
