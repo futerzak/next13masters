@@ -1,0 +1,5 @@
+query ProductsGetAll {
+	products {
+		id
+	}
+}

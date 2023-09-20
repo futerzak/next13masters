@@ -1,8 +1,9 @@
 import React from "react";
 import Link from "next/link";
-import { Product, type ProductType } from "@/ui/molecules/Product";
+import { Product } from "@/ui/molecules/Product";
+import { type ProductListItemFragment } from "@/gql/graphql";
 
-export const ProductsList = ({ products }: { products: ProductType[]; }) => {
+export const ProductsList = ({ products }: { products: ProductListItemFragment[]; }) => {
     return (
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-8" data-testid="products-list">
             {products.map((product) => (

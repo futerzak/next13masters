@@ -1,9 +1,13 @@
 import React from 'react'
 import { ActiveLink } from '@/ui/atoms/ActiveLink'
-import { pagesCount } from '@/utils/pagesCount';
+import { executeGraphql } from '@/api/graphqlApi';
+import { ProductsGetAllDocument } from '@/gql/graphql';
+import { paginationSize } from '@/utils/pagination';
 
-export default function ProductsLayout({ children }: { children: React.ReactNode }) {
+export default async function ProductsLayout({ children }: { children: React.ReactNode }) {
     const items = [];
+    const { products } = await executeGraphql(ProductsGetAllDocument);
+    const pagesCount = Math.ceil(products.length / (paginationSize))
     for (let i = 1; i <= pagesCount; i++) {
         items.push(
             <li key={i}>

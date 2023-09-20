@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint --fix --dir src",
-    "codegen": "graphql-codegen --config .graphqlrc.ts --watch"
+    "codegen": "graphql-codegen --config .graphqlrc.ts"
   },
   "dependencies": {
     "@types/node": "20.6.2",
@@ -29,6 +29,7 @@
   "devDependencies": {
     "@graphql-codegen/cli": "5.0.0",
     "@graphql-codegen/client-preset": "4.1.0",
+    "@graphql-typed-document-node/core": "^3.2.0",
     "@next/env": "^13.5.2",
     "@typescript-eslint/eslint-plugin": "^6.7.2",
     "@typescript-eslint/parser": "^6.7.2",

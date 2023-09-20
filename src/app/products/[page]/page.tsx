@@ -1,12 +1,15 @@
 import React from 'react'
-import { fetchProductsWithPagination } from '@/utils/api/productsApi'
-import { type ProductType } from '@/ui/molecules/Product'
+import { notFound } from 'next/navigation'
+import { paginationSize } from '@/utils/pagination'
+import { ProductsGetAllDocument, ProductsGetListWithPaginationDocument } from '@/gql/graphql'
+import { executeGraphql } from '@/api/graphqlApi'
 import { ProductsList } from '@/ui/organisms/ProductsList'
-import { pagesCount } from '@/utils/pagesCount'
 
 
 export const generateStaticParams = async () => {
     const params = []
+    const { products } = await executeGraphql(ProductsGetAllDocument);
+    const pagesCount = Math.ceil(products.length / (paginationSize))
     for (let i = 1; i <= pagesCount; i++) {
         params.push({ page: i.toString() })
     }
@@ -21,17 +24,17 @@ export async function generateMetadata({ params }: { params: { page: string } })
 }
 
 export default async function PaginationProductList({ params }: { params: { page: number } }) {
-    try {
-        const products: ProductType[] | [] = await fetchProductsWithPagination(20, params.page)
-        return (
-            <main className="flex min-h-screen flex-col items-center justify-between p-24" >
-                <section className="flex justify-between" >
-                    {products.length ? <ProductsList products={products} /> : <p>Products not found</p>}
-                </section>
-            </main>
-        )
-    } catch (error) {
-        console.log(error)
-        return <p>Products not found</p>
+    const { products } = await executeGraphql(ProductsGetListWithPaginationDocument, { first: paginationSize, skip: (params.page - 1) * paginationSize });
+
+    if (!products) {
+        notFound();
     }
+
+    return (
+        <main className="flex min-h-screen flex-col items-center justify-between p-24" >
+            <section className="flex justify-between" >
+                {products.length ? <ProductsList products={products} /> : <p>Products not found</p>}
+            </section>
+        </main>
+    )
 }

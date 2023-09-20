@@ -3,7 +3,8 @@ const nextConfig = {
     images: {
         domains: [
             'via.placeholder.com',
-            'naszsklep-api.vercel.app'
+            'naszsklep-api.vercel.app',
+            'media.graphassets.com',
         ]
     },
     experimental: {
