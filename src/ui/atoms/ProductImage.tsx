@@ -1,8 +1,8 @@
-import Image from "next/image";
+import NextImage from "next/image";
 
 export const ProductImage = ({ image }: { image: { src: string; alt: string; }; }) => (
-    <picture className="max-w-xs aspect-square rounded-lg overflow-hidden">
-        <Image
+    <picture className="max-w-xs aspect-square rounded-lg overflow-hidden hover:scale-110 transition-transform">
+        <NextImage
             src={image.src}
             alt={image.alt}
             width={300}

@@ -11,7 +11,7 @@ export default async function ProductsLayout({ children }: { children: React.Rea
     for (let i = 1; i <= pagesCount; i++) {
         items.push(
             <li key={i}>
-                <ActiveLink href={`/products/${i}`} className="px-2 py-1 rounded-md bg-gray-200 text-gray-800 hover:bg-gray-300" activeClassName={''}>{i}</ActiveLink>
+                <ActiveLink href={`/products/${i}`} className="px-2 py-1 rounded-md bg-gray-200 text-gray-800 hover:bg-gray-300" activeClassName={'bg-blue-200'}>{i}</ActiveLink>
             </li>
         );
     }

@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { executeGraphql } from '@/api/graphqlApi'
 import { ProductGetByIdDocument } from '@/gql/graphql'
+import { RelatedProduct } from '@/ui/molecules/RelatedProduct'
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
 
@@ -43,9 +44,11 @@ export default async function ProductPage({ params }: { params: { id: string } }
                     </section>
                     : <p>Product not found</p>}
             </section>
+            <section className="flex justify-between w-full mt-8">
+                <RelatedProduct productId={product.id} collectionSlug={product.collections[0].slug} />
+            </section>
         </main>
     )
 
 }
-
 

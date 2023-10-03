@@ -26,14 +26,14 @@ export async function generateMetadata({ params }: { params: { page: string } })
 export default async function PaginationProductList({ params }: { params: { page: number } }) {
     const { products } = await executeGraphql(ProductsGetListWithPaginationDocument, { first: paginationSize, skip: (params.page - 1) * paginationSize });
 
-    if (!products) {
+    if (!products.length) {
         notFound();
     }
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24" >
             <section className="flex justify-between" >
-                {products.length ? <ProductsList products={products} /> : <p>Products not found</p>}
+                <ProductsList products={products} />
             </section>
         </main>
     )
