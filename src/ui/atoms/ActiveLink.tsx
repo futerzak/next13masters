@@ -24,8 +24,9 @@ export function ActiveLink<T extends string>({
     const isActive = exact ? pathname === href : pathname.startsWith(href);
 
     const urlObject: UrlObject = typeof href === "string" ? { pathname: href } : href;
+    const current = isActive ? { ['aria-current']: isActive } : {};
     return (
-        <Link href={urlObject} className={clsx(className, { [activeClassName]: isActive })}>
+        <Link href={urlObject} className={clsx(className, { [activeClassName]: isActive })} {...current}>
             {children}
         </Link>
     );
