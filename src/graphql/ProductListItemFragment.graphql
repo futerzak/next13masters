@@ -13,4 +13,21 @@ fragment ProductListItem on Product {
 		name
 		slug
 	}
+	variants {
+		... on ProductColorVariant {
+			id
+			name
+		}
+		... on ProductSizeColorVariant {
+			id
+			name
+			color
+			size
+		}
+		... on ProductSizeVariant {
+			id
+			name
+			size
+		}
+	}
 }

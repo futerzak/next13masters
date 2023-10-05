@@ -1,5 +1,7 @@
 query ProductsGetByCategorySlug($slug: String!, $skip: Int, $first: Int) {
 	categories(where: { slug: $slug }) {
+		name
+		description
 		products(first: $first, skip: $skip) {
 			...ProductListItem
 		}

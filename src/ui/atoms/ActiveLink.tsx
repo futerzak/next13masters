@@ -22,10 +22,11 @@ export function ActiveLink<T extends string>({
 }: ActiveLinkProps<T>) {
     const pathname = usePathname();
     const isActive = exact ? pathname === href : pathname.startsWith(href);
+    const isAriaCurrent = isActive ? { "aria-current": true } : [""];
 
     const urlObject: UrlObject = typeof href === "string" ? { pathname: href } : href;
     return (
-        <Link href={urlObject} className={clsx(className, { [activeClassName]: isActive })}>
+        <Link href={urlObject} className={clsx(className, { [activeClassName]: isActive })} {...isAriaCurrent}>
             {children}
         </Link>
     );

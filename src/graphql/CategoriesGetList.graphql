@@ -3,5 +3,6 @@ query CategoriesGetList {
 		id
 		slug
 		name
+		description
 	}
 }

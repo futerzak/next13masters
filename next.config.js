@@ -5,6 +5,7 @@ const nextConfig = {
             'via.placeholder.com',
             'naszsklep-api.vercel.app',
             'media.graphassets.com',
+            'source.unsplash.com',
         ]
     },
     experimental: {

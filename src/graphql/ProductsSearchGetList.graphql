@@ -1,0 +1,5 @@
+query ProductsSearchGetList($query: String!) {
+	products(where: { _search: $query }) {
+		...ProductListItem
+	}
+}
