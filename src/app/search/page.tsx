@@ -5,7 +5,7 @@ import { executeGraphql } from '@/api/graphqlApi';
 
 export default async function SearchPage({ searchParams }: { searchParams: { query: string } }) {
     const { query } = searchParams
-    const { products } = await executeGraphql(ProductsSearchGetListDocument, { query });
+    const { products } = await executeGraphql({ query: ProductsSearchGetListDocument, variables: { query } });
 
     return (
         <main >

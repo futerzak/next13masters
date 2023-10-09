@@ -3,7 +3,7 @@ import { executeGraphql } from '@/api/graphqlApi';
 import { CollectionsGetListDocument } from '@/gql/graphql';
 
 export default async function CollectionsPage({ params }: { params: { collectionSlug: string } }) {
-    const { collections } = await executeGraphql(CollectionsGetListDocument);
+    const { collections } = await executeGraphql({ query: CollectionsGetListDocument });
 
     const collection = collections.find((collection) => collection.slug === params.collectionSlug);
 

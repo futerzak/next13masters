@@ -8,8 +8,10 @@ export default async function CategoriesLayout({ children, params }: {
     children: React.ReactNode, params: { categorySlug: string }
 }) {
     const items = [];
-    const { categories: [{ products }] } = await executeGraphql(ProductsGetByCategorySlugDocument, {
-        slug: params.categorySlug,
+    const { categories: [{ products }] } = await executeGraphql({
+        query: ProductsGetByCategorySlugDocument, variables: {
+            slug: params.categorySlug,
+        }
     });
     const pagesCount = Math.ceil(products.length / (2)) // change to paginationSize const
     for (let i = 1; i <= pagesCount; i++) {

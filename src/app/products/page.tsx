@@ -9,7 +9,7 @@ export const metadata = {
 
 export default async function ProductsPage() {
     // redirect("/products/1");
-    const { products } = await executeGraphql(ProductsGetListWithPaginationDocument, { first: 20, skip: 0 });
+    const { products } = await executeGraphql({ query: ProductsGetListWithPaginationDocument, variables: { first: 20, skip: 0 } });
 
     if (!products.length) {
         notFound();

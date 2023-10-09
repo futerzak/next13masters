@@ -8,8 +8,10 @@ import { ProductsList } from '@/ui/organisms/ProductsList';
 export async function generateMetadata({ params }: { params: { categorySlug: string, pageNumber: string } }) {
     const { categorySlug } = params;
 
-    const { categories: [{ name, description }] } = await executeGraphql(ProductsGetByCategorySlugDocument, {
-        slug: categorySlug,
+    const { categories: [{ name, description }] } = await executeGraphql({
+        query: ProductsGetByCategorySlugDocument, variables: {
+            slug: categorySlug,
+        }
     });
     return {
         title: name || '',
@@ -24,10 +26,12 @@ export async function generateMetadata({ params }: { params: { categorySlug: str
 export default async function CategorySlugPage({ params }: { params: { categorySlug: string, pageNumber: string } }) {
     const { categorySlug, pageNumber } = params;
 
-    const { categories: [{ products, name }] } = await executeGraphql(ProductsGetByCategorySlugDocument, {
-        slug: categorySlug,
-        skip: (parseInt(pageNumber) - 1) * 2,
-        first: 2,
+    const { categories: [{ products, name }] } = await executeGraphql({
+        query: ProductsGetByCategorySlugDocument, variables: {
+            slug: categorySlug,
+            skip: (parseInt(pageNumber) - 1) * 2,
+            first: 2,
+        }
     });
 
     return (

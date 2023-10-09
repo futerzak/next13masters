@@ -4,8 +4,10 @@ import { executeGraphql } from '@/api/graphqlApi';
 import { ProductGetByIdDocument } from '@/gql/graphql';
 
 export default async function OpengraphImage({ params }: { params: { id: string } }) {
-    const { product } = await executeGraphql(ProductGetByIdDocument, {
-        id: params.id,
+    const { product } = await executeGraphql({
+        query: ProductGetByIdDocument, variables: {
+            id: params.id,
+        }
     });
     if (!product) {
         return null;

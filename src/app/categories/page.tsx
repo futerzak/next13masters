@@ -4,7 +4,7 @@ import { CategoriesGetListDocument } from "@/gql/graphql";
 
 
 export default async function CategoriesPage() {
-    const { categories } = await executeGraphql(CategoriesGetListDocument);
+    const { categories } = await executeGraphql({ query: CategoriesGetListDocument });
 
     return (
         <main>

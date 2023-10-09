@@ -6,7 +6,7 @@ import { executeGraphql } from "@/api/graphqlApi";
 import { CategoriesGetListDocument } from "@/gql/graphql";
 
 export async function Navigation() {
-    const { categories } = await executeGraphql(CategoriesGetListDocument);
+    const { categories } = await executeGraphql({ query: CategoriesGetListDocument });
     return (
         <header className="flex justify-between items-center py-4 px-8 bg-gray-800 text-white">
             <div className="flex items-center">

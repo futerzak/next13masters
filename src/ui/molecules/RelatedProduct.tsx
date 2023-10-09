@@ -9,9 +9,11 @@ type RelatedProductProps = {
 };
 
 export async function RelatedProduct({ productId, collectionSlug }: RelatedProductProps) {
-    const { products } = await executeGraphql(ProductRelatedGetListDocument, {
-        productId,
-        collectionSlug
+    const { products } = await executeGraphql({
+        query: ProductRelatedGetListDocument, variables: {
+            productId,
+            collectionSlug
+        }
     });
     return (
         <aside data-testid="related-products">

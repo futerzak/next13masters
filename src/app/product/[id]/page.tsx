@@ -8,32 +8,38 @@ import { RelatedProduct } from '@/ui/molecules/RelatedProduct'
 import { AddToCartButton } from '@/ui/atoms/AddToCartButton';
 
 async function addProductToCart(cartId: string, productId: string) {
-    const { product } = await executeGraphql(ProductGetByIdDocument, {
-        id: productId,
+    const { product } = await executeGraphql({
+        query: ProductGetByIdDocument, variables: {
+            id: productId,
+        }
     });
     if (!product) {
         throw new Error(`Product with id ${productId} not found`);
     }
 
-    await executeGraphql(CartAddItemDocument, {
-        cartId,
-        productId,
-        total: product.price,
+    await executeGraphql({
+        query: CartAddItemDocument, variables: {
+            cartId,
+            productId,
+            total: product.price,
+        }
     });
 }
 
 async function getOrCreateCart() {
     const cartId = cookies().get("cartId")?.value;
     if (cartId) {
-        const { order: cart } = await executeGraphql(CartGetByIdDocument, {
-            id: cartId,
+        const { order: cart } = await executeGraphql({
+            query: CartGetByIdDocument, variables: {
+                id: cartId,
+            }
         });
         if (cart) {
             return cart;
         }
     }
 
-    const { createOrder: newCart } = await executeGraphql(CartCreateDocument);
+    const { createOrder: newCart } = await executeGraphql({ query: CartCreateDocument })
     if (!newCart) {
         throw new Error("Failed to create cart");
     }
@@ -44,8 +50,10 @@ async function getOrCreateCart() {
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
 
-    const { product } = await executeGraphql(ProductGetByIdDocument, {
-        id: params.id,
+    const { product } = await executeGraphql({
+        query: ProductGetByIdDocument, variables: {
+            id: params.id,
+        }
     });
     return {
         title: `${product?.name} - FUTERZAK sklep`,
@@ -55,8 +63,10 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 
 export default async function ProductPage({ params }: { params: { id: string } }) {
 
-    const { product } = await executeGraphql(ProductGetByIdDocument, {
-        id: params.id,
+    const { product } = await executeGraphql({
+        query: ProductGetByIdDocument, variables: {
+            id: params.id,
+        }
     });
 
     if (!product) {
