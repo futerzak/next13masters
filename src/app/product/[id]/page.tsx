@@ -1,52 +1,14 @@
 import React, { Suspense } from 'react'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import { cookies } from "next/headers";
+import { revalidateTag } from 'next/cache'
 import { executeGraphql } from '@/api/graphqlApi'
-import { ProductGetByIdDocument, CartGetByIdDocument, CartCreateDocument, CartAddItemDocument } from '@/gql/graphql'
+import { ProductGetByIdDocument } from '@/gql/graphql'
 import { RelatedProduct } from '@/ui/molecules/RelatedProduct'
 import { AddToCartButton } from '@/ui/atoms/AddToCartButton';
+import { getOrCreateCart, addProductToCart } from '@/api/cart';
 
-async function addProductToCart(cartId: string, productId: string) {
-    const { product } = await executeGraphql({
-        query: ProductGetByIdDocument, variables: {
-            id: productId,
-        }
-    });
-    if (!product) {
-        throw new Error(`Product with id ${productId} not found`);
-    }
 
-    await executeGraphql({
-        query: CartAddItemDocument, variables: {
-            cartId,
-            productId,
-            total: product.price,
-        }
-    });
-}
-
-async function getOrCreateCart() {
-    const cartId = cookies().get("cartId")?.value;
-    if (cartId) {
-        const { order: cart } = await executeGraphql({
-            query: CartGetByIdDocument, variables: {
-                id: cartId,
-            }
-        });
-        if (cart) {
-            return cart;
-        }
-    }
-
-    const { createOrder: newCart } = await executeGraphql({ query: CartCreateDocument })
-    if (!newCart) {
-        throw new Error("Failed to create cart");
-    }
-
-    cookies().set("cartId", newCart.id);
-    return newCart;
-}
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
 
@@ -77,6 +39,8 @@ export default async function ProductPage({ params }: { params: { id: string } }
         "use server";
         const cart = await getOrCreateCart();
         await addProductToCart(cart.id, product.id);
+
+        revalidateTag(`cart`);
     }
 
 
@@ -112,7 +76,6 @@ export default async function ProductPage({ params }: { params: { id: string } }
 
 }
 
-
 function ReviewForm() {
     return (
         <form aria-testid="add-review-form">
@@ -125,8 +88,6 @@ function ReviewForm() {
         </form>
     )
 }
-
-
 
 function Variants({ variants }: { variants: { id: string, name?: string, color?: string, size?: string }[] }) {
     return (

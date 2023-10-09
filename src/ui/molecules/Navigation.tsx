@@ -1,20 +1,18 @@
-import Image from "next/image";
 import React from "react";
+import Link from "next/link";
 import { SearchOnPage } from "../atoms/SearchOnPage";
 import { ActiveLink } from "@/ui/atoms/ActiveLink";
 import { executeGraphql } from "@/api/graphqlApi";
 import { CategoriesGetListDocument } from "@/gql/graphql";
+import { getCartFromCookies } from "@/api/cart";
 
 export async function Navigation() {
     const { categories } = await executeGraphql({ query: CategoriesGetListDocument });
+    const cart = await getCartFromCookies();
+    const quantity = cart?.orderItems.length ?? 0;
     return (
         <header className="flex justify-between items-center py-4 px-8 bg-gray-800 text-white">
-            <div className="flex items-center">
-                <Image src="https://via.placeholder.com/150x32" alt="Logo" className="h-8 mr-2" width={150} height={32} />
-                <p className="text-lg font-bold">My App</p>
-            </div>
             <nav className="flex flex-row gap-2">
-                <SearchOnPage />
                 <ul className="flex justify-center space-x-4">
                     <li>
                         <ActiveLink
@@ -41,6 +39,10 @@ export async function Navigation() {
                     ))}
                 </ul>
             </nav>
+            <div className="flex gap-4">
+                <SearchOnPage />
+                <Link href="/cart">CART ICON <span>{quantity}</span></Link>
+            </div>
         </header >
     );
 }
