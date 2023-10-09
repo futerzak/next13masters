@@ -9,7 +9,8 @@ const nextConfig = {
         ]
     },
     experimental: {
-        typedRoutes: true
+        typedRoutes: true,
+        serverActions: true,
     }
 };
 

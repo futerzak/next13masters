@@ -1,9 +1,46 @@
 import React, { Suspense } from 'react'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
+import { cookies } from "next/headers";
 import { executeGraphql } from '@/api/graphqlApi'
-import { ProductGetByIdDocument } from '@/gql/graphql'
+import { ProductGetByIdDocument, CartGetByIdDocument, CartCreateDocument, CartAddItemDocument } from '@/gql/graphql'
 import { RelatedProduct } from '@/ui/molecules/RelatedProduct'
+import { AddToCartButton } from '@/ui/atoms/AddToCartButton';
+
+async function addProductToCart(cartId: string, productId: string) {
+    const { product } = await executeGraphql(ProductGetByIdDocument, {
+        id: productId,
+    });
+    if (!product) {
+        throw new Error(`Product with id ${productId} not found`);
+    }
+
+    await executeGraphql(CartAddItemDocument, {
+        cartId,
+        productId,
+        total: product.price,
+    });
+}
+
+async function getOrCreateCart() {
+    const cartId = cookies().get("cartId")?.value;
+    if (cartId) {
+        const { order: cart } = await executeGraphql(CartGetByIdDocument, {
+            id: cartId,
+        });
+        if (cart) {
+            return cart;
+        }
+    }
+
+    const { createOrder: newCart } = await executeGraphql(CartCreateDocument);
+    if (!newCart) {
+        throw new Error("Failed to create cart");
+    }
+
+    cookies().set("cartId", newCart.id);
+    return newCart;
+}
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
 
@@ -13,15 +50,6 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
     return {
         title: `${product?.name} - FUTERZAK sklep`,
         description: product?.description || '',
-        openGraph: {
-            title: `${product?.name} - FUTERZAK sklep`,
-            description: product?.description || '',
-            images: [
-                {
-                    url: product?.images[0].url || '',
-                },
-            ],
-        },
     }
 }
 
@@ -35,11 +63,19 @@ export default async function ProductPage({ params }: { params: { id: string } }
         notFound();
     }
 
+    const addProductToCartAction = async () => {
+        "use server";
+        const cart = await getOrCreateCart();
+        await addProductToCart(cart.id, product.id);
+    }
+
+
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
             <section className="flex justify-between">
                 {product ?
-                    <section className="flex justify-between w-full">
+                    <form action={addProductToCartAction} className="flex justify-between w-full">
+                        <input type="text" name="productId" value={product.id} hidden />
                         <article className="w-1/2">
                             <Image src={product.images[0].url} alt={product.name} className="w-full" width={320} height={430} />
                         </article>
@@ -48,11 +84,9 @@ export default async function ProductPage({ params }: { params: { id: string } }
                             <p className="text-gray-600 text-lg mb-4">{product.description}</p>
                             <p className="text-gray-600 text-lg mb-4">Price: {product.price / 100} zł</p>
                             {!!product.variants.length && <Variants variants={product.variants} />}
-                            <button className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded" aria-testid="add-to-card-button">
-                                Add to cart
-                            </button>
+                            <AddToCartButton />
                         </article>
-                    </section>
+                    </form>
                     : <p>Product not found</p>}
             </section>
             <section className="flex justify-between w-full mt-8">
@@ -77,6 +111,7 @@ function ReviewForm() {
             <input type="text" name="email" />
             <input type="text" name="content" />
             <input type="number" name="rating" />
+            <button type="submit">Send</button>
         </form>
     )
 }
@@ -95,4 +130,3 @@ function Variants({ variants }: { variants: { id: string, name?: string, color?:
         </div>
     )
 }
-
