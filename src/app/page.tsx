@@ -1,11 +1,12 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { executeGraphql } from "@/api/graphqlApi";
-import { ProductsGetListDocument } from "@/gql/graphql";
+import { CollectionsGetListDocument, ProductsGetListDocument } from "@/gql/graphql";
 import { ProductsList } from "@/ui/organisms/ProductsList";
 
 export default async function Home() {
   const { products } = await executeGraphql({ query: ProductsGetListDocument });
+  const { collections } = await executeGraphql({ query: CollectionsGetListDocument });
 
   if (!products.length) {
     notFound();
@@ -13,9 +14,13 @@ export default async function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <ProductsList products={products.slice(0, 4)} />
-      <Link href='/collections/summer-vibes'>Collection</Link>
-      <Link href='/collections/new-arrivals'>Collection</Link>
-      <Link href='/collections/summer-vibes'>Collection</Link>
+      {!collections.length ? <p>Coming soon...</p> : <ul>
+        {collections.map((collection) => (
+          <li key={collection.id}>
+            <Link href={`/collections/${collection.slug}`}>{collection.name}</Link>
+          </li>
+        ))}
+      </ul>}
     </main >
   );
 }

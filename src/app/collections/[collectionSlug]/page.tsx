@@ -9,7 +9,7 @@ export default async function CollectionsPage({ params }: { params: { collection
 
     return (
         <div>
-            <h2>{collection?.name}</h2>
+            <h2>{collection?.name}!</h2>
         </div>
     )
 }
