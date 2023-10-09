@@ -1,0 +1,5 @@
+query ProductRelatedGetList($collectionSlug: String!, $productId: ID!) {
+	products(where: { collections_some: { slug: $collectionSlug }, id_not: $productId }) {
+		...ProductListItem
+	}
+}

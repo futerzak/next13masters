@@ -1,0 +1,8 @@
+query CategoriesGetList {
+	categories {
+		id
+		slug
+		name
+		description
+	}
+}
