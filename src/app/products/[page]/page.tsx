@@ -33,6 +33,7 @@ export default async function PaginationProductList({ params }: { params: { page
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24" >
             <section className="flex justify-between" >
+                <button data-testid="sort-by-price">sort by price</button>
                 <ProductsList products={products} />
             </section>
         </main>
