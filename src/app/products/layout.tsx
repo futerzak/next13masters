@@ -14,7 +14,7 @@ export default async function ProductsLayout({ children }: { children: React.Rea
                 <ActiveLink
                     href={`/products/${i}`}
                     className="px-2 py-1 rounded-md bg-gray-200 text-gray-800 hover:bg-gray-300"
-                    activeClassName={'bg-blue-500 text-white'}
+                    activeClassName={'border-gray-500 border-2'}
                 >{i}</ActiveLink>
             </li>
         );

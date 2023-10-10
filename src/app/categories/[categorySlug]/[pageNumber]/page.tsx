@@ -1,9 +1,9 @@
 
 import React from 'react'
-// import { paginationSize } from '@/utils/pagination';
 import { executeGraphql } from '@/api/graphqlApi';
 import { ProductsGetByCategorySlugDocument } from '@/gql/graphql';
 import { ProductsList } from '@/ui/organisms/ProductsList';
+import { paginationSize } from '@/utils/pagination';
 
 export async function generateMetadata({ params }: { params: { categorySlug: string, pageNumber: string } }) {
     const { categorySlug } = params;
@@ -29,8 +29,8 @@ export default async function CategorySlugPage({ params }: { params: { categoryS
     const { categories: [{ products, name }] } = await executeGraphql({
         query: ProductsGetByCategorySlugDocument, variables: {
             slug: categorySlug,
-            skip: (parseInt(pageNumber) - 1) * 2,
-            first: 2,
+            skip: (parseInt(pageNumber) - 1) * paginationSize,
+            first: paginationSize,
         }
     });
 
