@@ -44,7 +44,7 @@ export async function Navigation() {
             <div className="flex gap-4">
                 <SearchOnPage />
 
-                <Link href="/cart">
+                <Link href="/cart/sidebar">
                     <div className="flex items-center">
                         <ShoppingCartIcon size={24} />
                         <span className="ml-1">{quantity}</span>

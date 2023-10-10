@@ -41,7 +41,7 @@ export default async function ModalCart() {
                                 <p className="text-sm font-medium text-gray-900">Total:</p>
                                 <p className="text-sm text-gray-500">{formatPrice(totalCost || 0)}</p>
                             </div>
-                            <button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Finalize Transaction</button>
+                            <Link href="/cart" replace><button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Finalize Transaction</button></Link>
                         </>
                     ) : (
                         <p>Your cart is empty.</p>
