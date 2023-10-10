@@ -1,5 +1,5 @@
 "use client";
-import { useOptimistic } from "react";
+import { experimental_useOptimistic as useOptimistic } from "react";
 import { changeItemQuantity } from "@/app/cart/actions";
 
 
