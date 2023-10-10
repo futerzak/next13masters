@@ -1,4 +1,5 @@
 import NextImage from "next/image";
+import Link from "next/link";
 import { Overlay } from "@/ui/atoms/Overlay";
 import { getCartFromCookies } from "@/api/cart";
 import { formatPrice } from "@/utils/formatPrice";
@@ -24,7 +25,9 @@ export default async function ModalCart() {
                                         </div>
                                         <div className="ml-4 flex-1 flex flex-col justify-between">
                                             <div>
-                                                <h3 className="text-sm font-medium text-gray-900">{item.product?.name}</h3>
+                                                <Link href={`/product/${item.product.id}`}>
+                                                    <h3 className="text-sm font-medium text-gray-900">{item.product?.name}</h3>
+                                                </Link>
                                             </div>
                                             <div className="mt-4 flex items-center justify-between">
                                                 <p className="text-sm font-medium text-gray-900">{item.quantity} x {formatPrice(item.product?.price)}</p>
@@ -48,31 +51,3 @@ export default async function ModalCart() {
         </>
     );
 }
-
-// <ul className="divide-y divide-gray-200">
-//     {cart.orderItems.map((item) => (
-//         <li key={item.id} className="py-4 flex">
-//             <div className="flex-shrink-0 w-24 h-24 border border-gray-200 rounded-md overflow-hidden">
-//                 <img src={item.product?.image} alt={item.product?.name} className="w-full h-full object-cover" />
-//             </div>
-//             <div className="ml-4 flex-1 flex flex-col justify-between">
-//                 <div>
-//                     <h3 className="text-sm font-medium text-gray-900">{item.product?.name}</h3>
-//                     <p className="mt-1 text-sm text-gray-500">{item.product?.description}</p>
-//                 </div>
-//                 <div className="mt-4 flex items-center justify-between">
-//                     <p className="text-sm font-medium text-gray-900">{item.quantity} x {item.product?.price}</p>
-//                     <p className="text-sm text-gray-500">{item.quantity * item.product?.price}</p>
-//                 </div>
-//             </div>
-//         </li>
-//     ))}
-// </ul>
-//                     ) : (
-//     <p>Your cart is empty.</p>
-// )}
-//                 </div >
-//             </div >
-//         </>
-//     );
-// }

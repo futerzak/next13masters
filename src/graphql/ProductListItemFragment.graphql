@@ -30,4 +30,12 @@ fragment ProductListItem on Product {
 			size
 		}
 	}
+	reviews {
+		id
+		headline
+		name
+		email
+		content
+		rating
+	}
 }

@@ -9,8 +9,6 @@ import { AddToCartButton } from '@/ui/atoms/AddToCartButton';
 import { getOrCreateCart, addProductToCart } from '@/api/cart';
 import { formatPrice } from '@/utils/formatPrice'
 
-
-
 export async function generateMetadata({ params }: { params: { id: string } }) {
 
     const { product } = await executeGraphql({
@@ -50,7 +48,6 @@ export default async function ProductPage({ params }: { params: { id: string } }
             <section className="flex justify-between">
                 {product ?
                     <form action={addProductToCartAction} className="flex justify-between w-full">
-                        <input type="text" name="productId" value={product.id} hidden />
                         <article className="w-1/2">
                             <Image src={product.images[0].url} alt={product.name} className="w-full" width={320} height={430} />
                         </article>
@@ -69,17 +66,44 @@ export default async function ProductPage({ params }: { params: { id: string } }
                     <RelatedProducts productId={product.id} collectionSlug={product.collections[0].slug} />
                 </Suspense>
             </section>
-            <section>
+            <section className='flex justify-start gap-10 w-full mt-8'>
                 <ReviewForm productId={product.id} />
+                <Reviews reviews={product.reviews} />
             </section>
         </main>
     )
 
 }
 
+interface Review {
+    id: string;
+    headline: string;
+    content: string;
+    rating: number;
+    name: string;
+}
+
+interface ReviewsProps {
+    reviews: Review[];
+}
+
+function Reviews({ reviews }: ReviewsProps) {
+    return (
+        <div className="flex flex-col ">
+            <h2 className="text-2xl font-bold mb-4">Reviews</h2>
+            {reviews.map((review) => (
+                <article key={review.id} className="border border-gray-400 rounded-md p-4 mb-4">
+                    <h3 className="text-lg font-bold mb-2">{review.headline}</h3>
+                    <p className="text-gray-600 mb-2">{review.content}</p>
+                    <p className="text-gray-600 mb-2">Rating: {review.rating}</p>
+                    <p className="text-gray-600 mb-2">By: {review.name}</p>
+                </article>
+            ))}
+        </div>
+    )
+}
+
 function ReviewForm({ productId }: { productId: string }) {
-
-
     const addReviewAction = async (formData: FormData) => {
         "use server";
 
