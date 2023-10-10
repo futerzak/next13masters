@@ -35,7 +35,7 @@ export default async function CategorySlugPage({ params }: { params: { categoryS
     });
 
     return (
-        <main className="flex min-h-screen flex-col items-center p-5 gap-10" >
+        <main className="flex min-h-fit flex-col items-center p-5 gap-10" >
             <h2>{name}</h2>
             <section className="flex justify-between" >
                 <ProductsList products={products} />

@@ -11,6 +11,15 @@ const nextConfig = {
     experimental: {
         typedRoutes: true,
         serverActions: true,
+    },
+    redirects: async () => {
+        return [
+            {
+                source: '/products',
+                destination: '/products/1',
+                permanent: true,
+            },
+        ];
     }
 };
 

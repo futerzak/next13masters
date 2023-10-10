@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Navigation />
         {children}
-        <footer>
+        <footer className="mt-2">
           <p className="text-center">Made by <a href="https://futerzak.it">@futerzak</a></p>
         </footer>
         {modal}

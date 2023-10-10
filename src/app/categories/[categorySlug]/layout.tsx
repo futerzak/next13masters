@@ -17,17 +17,21 @@ export default async function CategoriesLayout({ children, params }: {
     for (let i = 1; i <= pagesCount; i++) {
         items.push(
             <li key={i}>
-                <ActiveLink href={`/categories/${params.categorySlug}/${i}`} className="px-2 py-1 rounded-md bg-gray-200 text-gray-800 hover:bg-gray-300" activeClassName={'bg-blue-200'}>{i}</ActiveLink>
+                <ActiveLink
+                    href={`/categories/${params.categorySlug}/${i}`}
+                    className="px-2 py-1 rounded-md bg-gray-200 text-gray-800 hover:bg-gray-300"
+                    activeClassName="bg-blue-500 text-white"
+                >{i}</ActiveLink>
             </li>
         );
     }
 
     return (
         <>
+            {children}
             <nav className='mt-2' aria-label="pagination">
                 <ul className='flex space-x-2 justify-center'>{items}</ul>
             </nav>
-            {children}
         </>
     );
 }

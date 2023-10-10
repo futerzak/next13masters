@@ -31,11 +31,24 @@ export default async function PaginationProductList({ params }: { params: { page
     }
 
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24" >
+        <main className="flex min-h-fit flex-col items-center justify-between p-24" >
+            <Sorting />
             <section className="flex justify-between" >
-                <button data-testid="sort-by-price">sort by price</button>
                 <ProductsList products={products} />
             </section>
-        </main>
+        </main >
+    )
+}
+
+
+const Sorting = () => {
+    return (<>
+        <select data-testid="sort-by" value={123}>
+            <option data-testid="sort-by-price" value="price-asc">Sort by price (asc)</option>
+            <option data-testid="sort-by-price" value="price-desc">Sort by price (desc)</option>
+            <option data-testid="sort-by-rating" value="rating-asc">Sort by rating (asc)</option>
+            <option data-testid="sort-by-rating" value="rating-desc">Sort by rating (desc)</option>
+        </select >
+    </>
     )
 }

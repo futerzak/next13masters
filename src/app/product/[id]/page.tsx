@@ -7,6 +7,7 @@ import { ProductGetByIdDocument } from '@/gql/graphql'
 import { RelatedProduct } from '@/ui/molecules/RelatedProduct'
 import { AddToCartButton } from '@/ui/atoms/AddToCartButton';
 import { getOrCreateCart, addProductToCart } from '@/api/cart';
+import { formatPrice } from '@/utils/formatPrice'
 
 
 
@@ -18,7 +19,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
         }
     });
     return {
-        title: `${product?.name} - FUTERZAK sklep`,
+        title: product?.name || '',
         description: product?.description || '',
     }
 }
@@ -56,7 +57,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
                         <article className="w-1/2 px-8">
                             <h1 className="text-4xl font-bold mb-4">{product.name}</h1>
                             <p className="text-gray-600 text-lg mb-4">{product.description}</p>
-                            <p className="text-gray-600 text-lg mb-4">Price: {product.price / 100} zł</p>
+                            <p className="text-gray-600 text-lg mb-4">Price: {formatPrice(product.price)}</p>
                             {!!product.variants.length && <Variants variants={product.variants} />}
                             <AddToCartButton />
                         </article>
