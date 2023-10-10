@@ -23,12 +23,13 @@ export default async function CartPage() {
     return (
         <div>
             <h1>Order #{cart.id} summary</h1>
-            <table>
+            <table className="w-full border-collapse">
                 <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
+                    <tr className="border-b-2 border-gray-300">
+                        <th className="text-left py-2 px-3">Product</th>
+                        <th className="text-left py-2 px-3">Quantity</th>
+                        <th className="text-left py-2 px-3">Price</th>
+                        <th className="text-left py-2 px-3">Remove</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,11 +38,11 @@ export default async function CartPage() {
                             return null;
                         }
                         return (
-                            <tr key={item.product.id}>
-                                <td>{item.product.name}</td>
-                                <td><ChangeQuantityButtons itemId={item.id} quantity={item.quantity} /></td>
-                                <td>{formatPrice(item.product.price)}</td>
-                                <td>
+                            <tr key={item.product.id} className="border-b-2 border-gray-300">
+                                <td className="py-2 px-3">{item.product.name}</td>
+                                <td className="py-2 px-3"><ChangeQuantityButtons itemId={item.id} quantity={item.quantity} /></td>
+                                <td className="py-2 px-3">{formatPrice(item.product.price)}</td>
+                                <td className="py-2 px-3">
                                     <RemoveButton itemId={item.id} />
                                 </td>
                             </tr>

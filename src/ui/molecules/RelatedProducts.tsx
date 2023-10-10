@@ -8,7 +8,7 @@ type RelatedProductProps = {
     collectionSlug: string;
 };
 
-export async function RelatedProduct({ productId, collectionSlug }: RelatedProductProps) {
+export async function RelatedProducts({ productId, collectionSlug }: RelatedProductProps) {
     const { products } = await executeGraphql({
         query: ProductRelatedGetListDocument, variables: {
             productId,

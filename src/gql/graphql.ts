@@ -10827,6 +10827,18 @@ export type ProductsSearchGetListQueryVariables = Exact<{
 
 export type ProductsSearchGetListQuery = { products: Array<{ id: string, name: string, description: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }>, collections: Array<{ name: string, slug: string }>, variants: Array<{ id: string, name: string } | { id: string, name: string, color: ProductColor, size: ProductSize } | { id: string, name: string, size: ProductSize }> }> };
 
+export type ReviewCreateMutationVariables = Exact<{
+  headline: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  email: Scalars['String']['input'];
+  rating: Scalars['Int']['input'];
+  content: Scalars['String']['input'];
+  productId: Scalars['ID']['input'];
+}>;
+
+
+export type ReviewCreateMutation = { createReview?: { id: string } | null };
+
 export class TypedDocumentString<TResult, TVariables>
   extends String
   implements DocumentTypeDecoration<TResult, TVariables>
@@ -11232,3 +11244,12 @@ export const ProductsSearchGetListDocument = new TypedDocumentString(`
     }
   }
 }`) as unknown as TypedDocumentString<ProductsSearchGetListQuery, ProductsSearchGetListQueryVariables>;
+export const ReviewCreateDocument = new TypedDocumentString(`
+    mutation ReviewCreate($headline: String!, $name: String!, $email: String!, $rating: Int!, $content: String!, $productId: ID!) {
+  createReview(
+    data: {headline: $headline, name: $name, email: $email, rating: $rating, content: $content, product: {connect: {id: $productId}}}
+  ) {
+    id
+  }
+}
+    `) as unknown as TypedDocumentString<ReviewCreateMutation, ReviewCreateMutationVariables>;

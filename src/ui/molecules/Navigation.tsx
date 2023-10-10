@@ -1,10 +1,12 @@
 import React from "react";
 import Link from "next/link";
+import { ShoppingCartIcon } from 'lucide-react'
 import { SearchOnPage } from "../atoms/SearchOnPage";
 import { ActiveLink } from "@/ui/atoms/ActiveLink";
 import { executeGraphql } from "@/api/graphqlApi";
 import { CategoriesGetListDocument } from "@/gql/graphql";
 import { getCartFromCookies } from "@/api/cart";
+
 
 export async function Navigation() {
     const { categories } = await executeGraphql({ query: CategoriesGetListDocument });
@@ -41,7 +43,13 @@ export async function Navigation() {
             </nav>
             <div className="flex gap-4">
                 <SearchOnPage />
-                <Link href="/cart">CART ICON <span>{quantity}</span></Link>
+
+                <Link href="/cart">
+                    <div className="flex items-center">
+                        <ShoppingCartIcon size={24} />
+                        <span className="ml-1">{quantity}</span>
+                    </div>
+                </Link>
             </div>
         </header >
     );
