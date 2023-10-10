@@ -1,5 +1,5 @@
-query ProductsGetListWithPagination($first: Int, $skip: Int) {
-	products(first: $first, skip: $skip) {
+query ProductsGetListWithPagination($first: Int, $skip: Int, $orderBy: ProductOrderByInput) {
+	products(first: $first, skip: $skip, orderBy: $orderBy) {
 		...ProductListItem
 	}
 }

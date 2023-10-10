@@ -10815,6 +10815,7 @@ export type ProductsGetListQuery = { products: Array<{ id: string, name: string,
 export type ProductsGetListWithPaginationQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
   skip?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<ProductOrderByInput>;
 }>;
 
 
@@ -11215,8 +11216,8 @@ export const ProductsGetListDocument = new TypedDocumentString(`
   }
 }`) as unknown as TypedDocumentString<ProductsGetListQuery, ProductsGetListQueryVariables>;
 export const ProductsGetListWithPaginationDocument = new TypedDocumentString(`
-    query ProductsGetListWithPagination($first: Int, $skip: Int) {
-  products(first: $first, skip: $skip) {
+    query ProductsGetListWithPagination($first: Int, $skip: Int, $orderBy: ProductOrderByInput) {
+  products(first: $first, skip: $skip, orderBy: $orderBy) {
     ...ProductListItem
   }
 }

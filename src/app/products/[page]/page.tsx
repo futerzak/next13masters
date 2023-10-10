@@ -1,7 +1,8 @@
 import React from 'react'
 import { notFound } from 'next/navigation'
+import { Sorting } from './Sorting'
 import { paginationSize } from '@/utils/pagination'
-import { ProductsGetAllDocument, ProductsGetListWithPaginationDocument } from '@/gql/graphql'
+import { type ProductOrderByInput, ProductsGetAllDocument, ProductsGetListWithPaginationDocument } from '@/gql/graphql'
 import { executeGraphql } from '@/api/graphqlApi'
 import { ProductsList } from '@/ui/organisms/ProductsList'
 
@@ -23,8 +24,15 @@ export async function generateMetadata({ params }: { params: { page: string } })
     }
 }
 
-export default async function PaginationProductList({ params }: { params: { page: number } }) {
-    const { products } = await executeGraphql({ query: ProductsGetListWithPaginationDocument, variables: { first: paginationSize, skip: (params.page - 1) * paginationSize } });
+export default async function PaginationProductList({ params, searchParams }: { params: { page: number }, searchParams: { orderBy: ProductOrderByInput } }) {
+    const { products } = await executeGraphql({
+        query: ProductsGetListWithPaginationDocument,
+        variables: {
+            first: paginationSize,
+            skip: (params.page - 1) * paginationSize,
+            orderBy: searchParams.orderBy,
+        }
+    });
 
     if (!products.length) {
         notFound();
@@ -41,14 +49,3 @@ export default async function PaginationProductList({ params }: { params: { page
 }
 
 
-const Sorting = () => {
-    return (<>
-        <select data-testid="sort-by" value={123}>
-            <option data-testid="sort-by-price" value="price-asc">Sort by price (asc)</option>
-            <option data-testid="sort-by-price" value="price-desc">Sort by price (desc)</option>
-            <option data-testid="sort-by-rating" value="rating-asc">Sort by rating (asc)</option>
-            <option data-testid="sort-by-rating" value="rating-desc">Sort by rating (desc)</option>
-        </select >
-    </>
-    )
-}
