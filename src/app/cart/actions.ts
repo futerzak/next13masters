@@ -1,7 +1,7 @@
 "use server";
 
 import { executeGraphql } from "@/api/graphqlApi";
-import { CartSetProductQuantityDocument } from "@/gql/graphql";
+import { CardRemoveProductDocument, CartSetProductQuantityDocument } from "@/gql/graphql";
 
 export const changeItemQuantity = (itemId: string, quantity: number) => {
 	return executeGraphql({
@@ -9,6 +9,16 @@ export const changeItemQuantity = (itemId: string, quantity: number) => {
 		variables: {
 			itemId,
 			quantity,
+		},
+		isTokenNeeded: true,
+	});
+};
+
+export const removeItem = (itemId: string) => {
+	return executeGraphql({
+		query: CardRemoveProductDocument,
+		variables: {
+			itemId,
 		},
 		isTokenNeeded: true,
 	});

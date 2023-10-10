@@ -12,8 +12,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: {
   children: React.ReactNode;
+  modal: React.ReactNode;
 }) {
   return (
     <html lang="pl">
@@ -23,6 +25,7 @@ export default function RootLayout({
         <footer>
           <p className="text-center">Made by <a href="https://futerzak.it">@futerzak</a></p>
         </footer>
+        {modal}
       </body>
     </html >
   );

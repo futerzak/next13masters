@@ -1,1 +1,1 @@
-export const paginationSize = 12;
+export const paginationSize = 4;

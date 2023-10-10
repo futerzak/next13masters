@@ -30,21 +30,25 @@ export async function addProductToCart(cartId: string, productId: string) {
 }
 export async function getCartFromCookies() {
 	const cartId = cookies().get("cartId")?.value;
-	if (cartId) {
-		const { order: cart } = await executeGraphql({
-			query: CartGetByIdDocument,
-			variables: {
-				id: cartId,
-			},
-			isTokenNeeded: true,
-			next: {
-				tags: ["cart"],
-			},
-		});
-		if (cart) {
-			return cart;
-		}
+
+	if (!cartId) {
+		return;
 	}
+
+	const { order: cart } = await executeGraphql({
+		query: CartGetByIdDocument,
+		variables: {
+			id: cartId,
+		},
+		isTokenNeeded: true,
+		next: {
+			tags: ["cart"],
+		},
+	});
+	if (!cart) {
+		return;
+	}
+	return cart;
 }
 
 export async function getOrCreateCart() {
