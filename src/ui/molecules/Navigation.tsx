@@ -3,12 +3,16 @@ import Link from "next/link";
 import { ShoppingCartIcon } from "lucide-react";
 import { SearchOnPage } from "../atoms/SearchOnPage";
 import { ActiveLink } from "@/ui/atoms/ActiveLink";
-import { executeGraphql } from "@/api/graphqlApi";
-import { CategoriesGetListDocument } from "@/gql/graphql";
 import { getCartFromCookies } from "@/api/cart";
 
 export async function Navigation() {
-	const { categories } = await executeGraphql({ query: CategoriesGetListDocument });
+	// const { categories } = await executeGraphql({ query: CategoriesGetListDocument });
+	const categories = [
+		{ id: 1, slug: 't-shirts', name: 'T-Shirts' },
+		{ id: 2, slug: 'hoodies', name: 'Hoodies' },
+		{ id: 3, slug: 'accessories', name: 'Accessories' }
+	];
+
 	const cart = await getCartFromCookies();
 	const quantity = cart?.orderItems.length ?? 0;
 	return (

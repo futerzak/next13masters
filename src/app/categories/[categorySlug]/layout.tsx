@@ -19,6 +19,9 @@ export default async function CategoriesLayout({
 		variables: {
 			slug: params.categorySlug,
 		},
+		next: {
+			revalidate: 30,
+		}
 	});
 	const pagesCount = Math.ceil(products.length / paginationSize);
 	for (let i = 1; i <= pagesCount; i++) {

@@ -1,6 +1,6 @@
 import React from "react";
 import { notFound } from "next/navigation";
-import { Sorting } from "./Sorting";
+import { Sorting } from "@/ui/atoms/Sorting";
 import { paginationSize } from "@/utils/pagination";
 import {
 	type ProductOrderByInput,
@@ -41,6 +41,9 @@ export default async function PaginationProductList({
 			skip: (params.page - 1) * paginationSize,
 			orderBy: searchParams.orderBy,
 		},
+		next: {
+			revalidate: 30,
+		}
 	});
 
 	if (!products.length) {

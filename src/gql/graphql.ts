@@ -10771,6 +10771,7 @@ export type CartUpsertItemMutationVariables = Exact<{
   productId: Scalars['ID']['input'];
   total: Scalars['Int']['input'];
   orderItemId?: InputMaybe<Scalars['ID']['input']>;
+  quantity?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
@@ -11024,10 +11025,10 @@ export const CartSetProductQuantityDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<CartSetProductQuantityMutation, CartSetProductQuantityMutationVariables>;
 export const CartUpsertItemDocument = new TypedDocumentString(`
-    mutation CartUpsertItem($cartId: ID!, $productId: ID!, $total: Int!, $orderItemId: ID) {
+    mutation CartUpsertItem($cartId: ID!, $productId: ID!, $total: Int!, $orderItemId: ID, $quantity: Int) {
   upsertOrderItem(
     where: {id: $orderItemId}
-    upsert: {create: {quantity: 1, total: $total, order: {connect: {id: $cartId}}, product: {connect: {id: $productId}}}, update: {quantity: 2, total: $total}}
+    upsert: {create: {quantity: 1, total: $total, order: {connect: {id: $cartId}}, product: {connect: {id: $productId}}}, update: {quantity: $quantity, total: $total}}
   ) {
     id
   }

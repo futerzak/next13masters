@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Stripe from "stripe";
+import Link from "next/link";
 import { formatPrice } from "@/utils/formatPrice";
 import { ChangeQuantityButtons } from "@/ui/atoms/ChangeQuantityButtons";
 import { getCartFromCookies } from "@/api/cart";
@@ -38,7 +39,7 @@ export default async function CartPage() {
 						}
 						return (
 							<tr key={item.product.id} className="border-b-2 border-gray-300">
-								<td className="px-3 py-2">{item.product.name}</td>
+								<td className="px-3 py-2"><Link href={`/product/${item.product.id}`}>{item.product.name}</Link></td>
 								<td className="px-3 py-2">
 									<ChangeQuantityButtons itemId={item.id} quantity={item.quantity} />
 								</td>

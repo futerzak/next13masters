@@ -2,7 +2,12 @@ import { executeGraphql } from "@/api/graphqlApi";
 import { CollectionsGetListDocument } from "@/gql/graphql";
 
 export default async function CollectionsPage() {
-	const { collections } = await executeGraphql({ query: CollectionsGetListDocument });
+	const { collections } = await executeGraphql({
+		query: CollectionsGetListDocument,
+		next: {
+			revalidate: 30,
+		}
+	});
 	return (
 		<main>
 			<h1>Collections</h1>

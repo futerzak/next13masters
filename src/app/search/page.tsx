@@ -8,6 +8,9 @@ export default async function SearchPage({ searchParams }: { searchParams: { que
 	const { products } = await executeGraphql({
 		query: ProductsSearchGetListDocument,
 		variables: { query },
+		next: {
+			revalidate: 30,
+		}
 	});
 
 	return (

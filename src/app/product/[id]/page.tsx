@@ -15,6 +15,9 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 		variables: {
 			id: params.id,
 		},
+		next: {
+			revalidate: 30,
+		}
 	});
 	return {
 		title: product?.name || "",
@@ -28,6 +31,9 @@ export default async function ProductPage({ params }: { params: { id: string } }
 		variables: {
 			id: params.id,
 		},
+		next: {
+			revalidate: 30,
+		}
 	});
 
 	if (!product) {

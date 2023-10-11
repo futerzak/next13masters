@@ -22,7 +22,7 @@ export async function addProductToCart(cartId: string, productId: string) {
 	if (!cart) {
 		throw new Error("Cart not found");
 	}
-	const orderItemId = cart.orderItems.find((item) => item.product?.id === product.id)?.id;
+	const orderItem = cart.orderItems.find((item) => item.product?.id === product.id);
 
 	await executeGraphql({
 		query: CartUpsertItemDocument,
@@ -30,7 +30,8 @@ export async function addProductToCart(cartId: string, productId: string) {
 			cartId,
 			productId,
 			total: product.price,
-			orderItemId,
+			orderItemId: orderItem?.id,
+			quantity: (orderItem?.quantity || 0) + 1,
 		},
 		isTokenNeeded: true,
 		cache: "no-cache",
