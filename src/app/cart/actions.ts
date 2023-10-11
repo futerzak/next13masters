@@ -11,6 +11,7 @@ export const changeItemQuantity = (itemId: string, quantity: number) => {
 			quantity,
 		},
 		isTokenNeeded: true,
+		cache: "no-store",
 	});
 };
 
@@ -20,6 +21,7 @@ export const removeItem = (itemId: string) => {
 		variables: {
 			itemId,
 		},
+		cache: "no-store",
 		isTokenNeeded: true,
 	});
 };

@@ -6,27 +6,29 @@ import { Navigation } from "@/ui/molecules/Navigation";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "FUTERZAK sklep",
-  description: "Mój pierwszy niekomercyjny większy projekt",
+	title: "FUTERZAK sklep",
+	description: "Mój pierwszy niekomercyjny większy projekt",
 };
 
 export default function RootLayout({
-  children,
-  modal,
+	children,
+	modal,
 }: {
-  children: React.ReactNode;
-  modal: React.ReactNode;
+	children: React.ReactNode;
+	modal: React.ReactNode;
 }) {
-  return (
-    <html lang="pl">
-      <body className={inter.className}>
-        <Navigation />
-        {children}
-        <footer className="mt-2">
-          <p className="text-center">Made by <a href="https://futerzak.it">@futerzak</a></p>
-        </footer>
-        {modal}
-      </body>
-    </html >
-  );
+	return (
+		<html lang="pl">
+			<body className={inter.className}>
+				<Navigation />
+				{children}
+				<footer className="mt-2">
+					<p className="text-center">
+						Made by <a href="https://futerzak.it">@futerzak</a>
+					</p>
+				</footer>
+				{modal}
+			</body>
+		</html>
+	);
 }
