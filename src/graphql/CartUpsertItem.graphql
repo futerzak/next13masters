@@ -1,4 +1,4 @@
-mutation CartUpsertItem($orderItemId: ID, $cartId: ID!, $productId: ID!, $total: Int!) {
+mutation CartUpsertItem($cartId: ID!, $productId: ID!, $total: Int!, $orderItemId: ID) {
 	upsertOrderItem(
 		where: { id: $orderItemId }
 		upsert: {

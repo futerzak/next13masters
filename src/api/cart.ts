@@ -4,7 +4,6 @@ import {
 	ProductGetByIdDocument,
 	CartGetByIdDocument,
 	CartCreateDocument,
-	GetOrderItemByOrderIdAndProductIdDocument,
 	CartUpsertItemDocument,
 } from "@/gql/graphql";
 
@@ -19,15 +18,11 @@ export async function addProductToCart(cartId: string, productId: string) {
 		throw new Error(`Product with id ${productId} not found`);
 	}
 
-	const { orderItems } = await executeGraphql({
-		query: GetOrderItemByOrderIdAndProductIdDocument,
-		variables: {
-			cartId,
-			productId,
-		},
-		cache: "no-cache",
-	});
-	console.log(orderItems);
+	const cart = await getCartFromCookies();
+	if (!cart) {
+		throw new Error("Cart not found");
+	}
+	const orderItemId = cart.orderItems.find((item) => item.product?.id === product.id)?.id;
 
 	await executeGraphql({
 		query: CartUpsertItemDocument,
@@ -35,7 +30,7 @@ export async function addProductToCart(cartId: string, productId: string) {
 			cartId,
 			productId,
 			total: product.price,
-			orderItemId: orderItems[0]?.id,
+			orderItemId,
 		},
 		isTokenNeeded: true,
 		cache: "no-cache",
