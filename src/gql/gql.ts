@@ -21,8 +21,10 @@ const documents = {
     "mutation CartRemoveItem($itemId: ID!) {\n  deleteOrderItem(where: {id: $itemId}) {\n    id\n  }\n}": types.CartRemoveItemDocument,
     "mutation CardRemoveProduct($itemId: ID!) {\n  deleteOrderItem(where: {id: $itemId}) {\n    id\n  }\n}": types.CardRemoveProductDocument,
     "mutation CartSetProductQuantity($itemId: ID!, $quantity: Int!) {\n  updateOrderItem(where: {id: $itemId}, data: {quantity: $quantity}) {\n    id\n    quantity\n  }\n}": types.CartSetProductQuantityDocument,
+    "mutation CartUpsertItem($orderItemId: ID, $cartId: ID!, $productId: ID!, $total: Int!) {\n  upsertOrderItem(\n    where: {id: $orderItemId}\n    upsert: {create: {quantity: 1, total: $total, order: {connect: {id: $cartId}}, product: {connect: {id: $productId}}}, update: {quantity: 2, total: $total}}\n  ) {\n    id\n  }\n}": types.CartUpsertItemDocument,
     "query CategoriesGetList {\n  categories {\n    id\n    slug\n    name\n    description\n  }\n}": types.CategoriesGetListDocument,
     "query CollectionsGetList {\n  collections {\n    id\n    slug\n    name\n    description\n  }\n}": types.CollectionsGetListDocument,
+    "query GetOrderItemByOrderIdAndProductId($cartId: ID!, $productId: ID!) {\n  orderItems(where: {order: {id: $cartId}, AND: {product: {id: $productId}}}) {\n    id\n  }\n}": types.GetOrderItemByOrderIdAndProductIdDocument,
     "query ProductGetById($id: ID!) {\n  product(where: {id: $id}) {\n    ...ProductListItem\n  }\n}": types.ProductGetByIdDocument,
     "fragment ProductListItem on Product {\n  id\n  name\n  description\n  categories(first: 1) {\n    name\n  }\n  images(first: 1) {\n    url\n  }\n  price\n  collections(first: 1) {\n    name\n    slug\n  }\n  variants {\n    ... on ProductColorVariant {\n      id\n      name\n    }\n    ... on ProductSizeColorVariant {\n      id\n      name\n      color\n      size\n    }\n    ... on ProductSizeVariant {\n      id\n      name\n      size\n    }\n  }\n  reviews {\n    id\n    headline\n    name\n    email\n    content\n    rating\n  }\n}": types.ProductListItemFragmentDoc,
     "query ProductRelatedGetList($collectionSlug: String!, $productId: ID!) {\n  products(where: {collections_some: {slug: $collectionSlug}, id_not: $productId}) {\n    ...ProductListItem\n  }\n}": types.ProductRelatedGetListDocument,
@@ -65,11 +67,19 @@ export function graphql(source: "mutation CartSetProductQuantity($itemId: ID!, $
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "mutation CartUpsertItem($orderItemId: ID, $cartId: ID!, $productId: ID!, $total: Int!) {\n  upsertOrderItem(\n    where: {id: $orderItemId}\n    upsert: {create: {quantity: 1, total: $total, order: {connect: {id: $cartId}}, product: {connect: {id: $productId}}}, update: {quantity: 2, total: $total}}\n  ) {\n    id\n  }\n}"): typeof import('./graphql').CartUpsertItemDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "query CategoriesGetList {\n  categories {\n    id\n    slug\n    name\n    description\n  }\n}"): typeof import('./graphql').CategoriesGetListDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "query CollectionsGetList {\n  collections {\n    id\n    slug\n    name\n    description\n  }\n}"): typeof import('./graphql').CollectionsGetListDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query GetOrderItemByOrderIdAndProductId($cartId: ID!, $productId: ID!) {\n  orderItems(where: {order: {id: $cartId}, AND: {product: {id: $productId}}}) {\n    id\n  }\n}"): typeof import('./graphql').GetOrderItemByOrderIdAndProductIdDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

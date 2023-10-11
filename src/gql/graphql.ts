@@ -10766,6 +10766,16 @@ export type CartSetProductQuantityMutationVariables = Exact<{
 
 export type CartSetProductQuantityMutation = { updateOrderItem?: { id: string, quantity: number } | null };
 
+export type CartUpsertItemMutationVariables = Exact<{
+  orderItemId?: InputMaybe<Scalars['ID']['input']>;
+  cartId: Scalars['ID']['input'];
+  productId: Scalars['ID']['input'];
+  total: Scalars['Int']['input'];
+}>;
+
+
+export type CartUpsertItemMutation = { upsertOrderItem?: { id: string } | null };
+
 export type CategoriesGetListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -10775,6 +10785,14 @@ export type CollectionsGetListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type CollectionsGetListQuery = { collections: Array<{ id: string, slug: string, name: string, description?: string | null }> };
+
+export type GetOrderItemByOrderIdAndProductIdQueryVariables = Exact<{
+  cartId: Scalars['ID']['input'];
+  productId: Scalars['ID']['input'];
+}>;
+
+
+export type GetOrderItemByOrderIdAndProductIdQuery = { orderItems: Array<{ id: string }> };
 
 export type ProductGetByIdQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -10996,6 +11014,16 @@ export const CartSetProductQuantityDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<CartSetProductQuantityMutation, CartSetProductQuantityMutationVariables>;
+export const CartUpsertItemDocument = new TypedDocumentString(`
+    mutation CartUpsertItem($orderItemId: ID, $cartId: ID!, $productId: ID!, $total: Int!) {
+  upsertOrderItem(
+    where: {id: $orderItemId}
+    upsert: {create: {quantity: 1, total: $total, order: {connect: {id: $cartId}}, product: {connect: {id: $productId}}}, update: {quantity: 2, total: $total}}
+  ) {
+    id
+  }
+}
+    `) as unknown as TypedDocumentString<CartUpsertItemMutation, CartUpsertItemMutationVariables>;
 export const CategoriesGetListDocument = new TypedDocumentString(`
     query CategoriesGetList {
   categories {
@@ -11016,6 +11044,13 @@ export const CollectionsGetListDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<CollectionsGetListQuery, CollectionsGetListQueryVariables>;
+export const GetOrderItemByOrderIdAndProductIdDocument = new TypedDocumentString(`
+    query GetOrderItemByOrderIdAndProductId($cartId: ID!, $productId: ID!) {
+  orderItems(where: {order: {id: $cartId}, AND: {product: {id: $productId}}}) {
+    id
+  }
+}
+    `) as unknown as TypedDocumentString<GetOrderItemByOrderIdAndProductIdQuery, GetOrderItemByOrderIdAndProductIdQueryVariables>;
 export const ProductGetByIdDocument = new TypedDocumentString(`
     query ProductGetById($id: ID!) {
   product(where: {id: $id}) {
