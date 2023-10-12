@@ -1,0 +1,5 @@
+query GetOrderItemsByOrderIdAndProductId($cartId: ID!, $productId: ID!) {
+	orderItems(where: { order: { id: $cartId }, AND: { product: { id: $productId } } }) {
+		id
+	}
+}

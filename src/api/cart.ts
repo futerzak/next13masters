@@ -4,7 +4,7 @@ import {
 	ProductGetByIdDocument,
 	CartGetByIdDocument,
 	CartCreateDocument,
-	CartAddItemDocument,
+	CartUpsertItemDocument,
 } from "@/gql/graphql";
 
 export async function addProductToCart(cartId: string, productId: string) {
@@ -18,14 +18,22 @@ export async function addProductToCart(cartId: string, productId: string) {
 		throw new Error(`Product with id ${productId} not found`);
 	}
 
+	const cart = await getCartFromCookies();
+	if (!cart) {
+		throw new Error("Cart not found");
+	}
+	const orderItemId = cart.orderItems.find((item) => item.product?.id === product.id)?.id;
+
 	await executeGraphql({
-		query: CartAddItemDocument,
+		query: CartUpsertItemDocument,
 		variables: {
 			cartId,
 			productId,
 			total: product.price,
+			orderItemId,
 		},
 		isTokenNeeded: true,
+		cache: "no-cache",
 	});
 }
 export async function getCartFromCookies() {

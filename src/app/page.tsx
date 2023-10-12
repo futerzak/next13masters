@@ -46,7 +46,7 @@ const Collections = () => {
 		},
 	];
 	return (
-		<div className="grid w-full grid-cols-3 gap-8">
+		<div className="grid w-full lg:grid-cols-3 gap-8">
 			{collections.map((collection) => (
 				<Link key={collection.slug} href={`/collections/${collection.slug}`}>
 					<div

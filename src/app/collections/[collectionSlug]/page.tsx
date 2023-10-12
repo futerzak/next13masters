@@ -1,6 +1,7 @@
 import React from "react";
 import { executeGraphql } from "@/api/graphqlApi";
-import { CollectionsGetListDocument } from "@/gql/graphql";
+import { CollectionsGetListDocument, ProductsGetByCollectionSlugDocument } from "@/gql/graphql";
+import { ProductsList } from "@/ui/organisms/ProductsList";
 
 export const generateMetadata = async ({ params }: { params: { collectionSlug: string } }) => {
 	const { collections } = await executeGraphql({ query: CollectionsGetListDocument });
@@ -14,13 +15,16 @@ export const generateMetadata = async ({ params }: { params: { collectionSlug: s
 };
 
 export default async function CollectionsPage({ params }: { params: { collectionSlug: string } }) {
-	const { collections } = await executeGraphql({ query: CollectionsGetListDocument });
-
-	const collection = collections.find((collection) => collection.slug === params.collectionSlug);
+	const { collections: [collection] } = await executeGraphql({
+		query: ProductsGetByCollectionSlugDocument, variables: {
+			slug: params.collectionSlug
+		}
+	});
 
 	return (
-		<div>
-			<h2>{collection?.name}</h2>
+		<div className="bg-gray-100 py-8">
+			<h2 className="text-2xl font-bold mb-4">{collection.name}</h2>
+			<ProductsList products={collection.products} />
 		</div>
 	);
 }
