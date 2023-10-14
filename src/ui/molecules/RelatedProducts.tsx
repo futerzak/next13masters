@@ -15,6 +15,9 @@ export async function RelatedProducts({ productId, collectionSlug }: RelatedProd
 			productId,
 			collectionSlug,
 		},
+		next: {
+			revalidate: 30,
+		}
 	});
 	return (
 		<aside data-testid="related-products">

@@ -1,4 +1,10 @@
-mutation CartUpsertItem($cartId: ID!, $productId: ID!, $total: Int!, $orderItemId: ID) {
+mutation CartUpsertItem(
+	$cartId: ID!
+	$productId: ID!
+	$total: Int!
+	$orderItemId: ID
+	$quantity: Int
+) {
 	upsertOrderItem(
 		where: { id: $orderItemId }
 		upsert: {
@@ -8,7 +14,7 @@ mutation CartUpsertItem($cartId: ID!, $productId: ID!, $total: Int!, $orderItemI
 				order: { connect: { id: $cartId } }
 				product: { connect: { id: $productId } }
 			}
-			update: { quantity: 2, total: $total }
+			update: { quantity: $quantity, total: $total }
 		}
 	) {
 		id

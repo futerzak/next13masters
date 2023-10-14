@@ -4,7 +4,12 @@ import { CollectionsGetListDocument, ProductsGetByCollectionSlugDocument } from 
 import { ProductsList } from "@/ui/organisms/ProductsList";
 
 export const generateMetadata = async ({ params }: { params: { collectionSlug: string } }) => {
-	const { collections } = await executeGraphql({ query: CollectionsGetListDocument });
+	const { collections } = await executeGraphql({
+		query: CollectionsGetListDocument,
+		next: {
+			revalidate: 30,
+		}
+	});
 
 	const collection = collections.find((collection) => collection.slug === params.collectionSlug);
 
@@ -18,6 +23,9 @@ export default async function CollectionsPage({ params }: { params: { collection
 	const { collections: [collection] } = await executeGraphql({
 		query: ProductsGetByCollectionSlugDocument, variables: {
 			slug: params.collectionSlug
+		},
+		next: {
+			revalidate: 30,
 		}
 	});
 

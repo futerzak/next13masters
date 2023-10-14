@@ -6,7 +6,12 @@ import { paginationSize } from "@/utils/pagination";
 
 export default async function ProductsLayout({ children }: { children: React.ReactNode }) {
 	const items = [];
-	const { products } = await executeGraphql({ query: ProductsGetAllDocument });
+	const { products } = await executeGraphql({
+		query: ProductsGetAllDocument,
+		next: {
+			revalidate: 30,
+		}
+	});
 	const pagesCount = Math.ceil(products.length / paginationSize);
 	for (let i = 1; i <= pagesCount; i++) {
 		items.push(

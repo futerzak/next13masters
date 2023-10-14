@@ -18,6 +18,9 @@ export async function generateMetadata({
 		variables: {
 			slug: categorySlug,
 		},
+		next: {
+			revalidate: 30,
+		}
 	});
 	return {
 		title: name || "",
@@ -45,6 +48,9 @@ export default async function CategorySlugPage({
 			skip: (parseInt(pageNumber) - 1) * paginationSize,
 			first: paginationSize,
 		},
+		next: {
+			revalidate: 30,
+		}
 	});
 
 	return (

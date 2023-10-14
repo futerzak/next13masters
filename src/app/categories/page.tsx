@@ -3,7 +3,12 @@ import { executeGraphql } from "@/api/graphqlApi";
 import { CategoriesGetListDocument } from "@/gql/graphql";
 
 export default async function CategoriesPage() {
-	const { categories } = await executeGraphql({ query: CategoriesGetListDocument });
+	const { categories } = await executeGraphql({
+		query: CategoriesGetListDocument,
+		next: {
+			revalidate: 30,
+		}
+	});
 
 	return (
 		<main>

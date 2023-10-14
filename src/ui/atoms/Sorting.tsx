@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export const Sorting = () => {
-	const [selectedOption, setSelectedOption] = useState("price_ASC");
+	const [selectedOption, setSelectedOption] = useState("");
+	const router = useRouter()
 
 	useEffect(() => {
 		const params = new URLSearchParams(window.location.search);
@@ -14,12 +16,16 @@ export const Sorting = () => {
 	}, []);
 
 	const handleOptionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-		setSelectedOption(event.target.value);
-		window.location.href = `/products/1?orderBy=${event.target.value}`;
+		const { value } = event.target
+		setSelectedOption(value);
+		if (!!value) {
+			router.push(`/products/1?orderBy=${value}`)
+		}
 	};
 
 	return (
 		<select value={selectedOption} onChange={handleOptionChange} data-testid="sort-by-dropdown">
+			<option value="">sortowanie</option>
 			<option value="price_ASC" data-testid="sort-by-price">
 				Sort by price (asc)
 			</option>
