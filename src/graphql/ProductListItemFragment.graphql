@@ -30,7 +30,7 @@ fragment ProductListItem on Product {
 			size
 		}
 	}
-	reviews {
+	reviews(where: { documentInStages_some: { stage: DRAFT } }) {
 		id
 		headline
 		name

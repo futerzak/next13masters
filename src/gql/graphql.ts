@@ -10915,7 +10915,7 @@ export const ProductListItemFragmentDoc = new TypedDocumentString(`
       size
     }
   }
-  reviews {
+  reviews(where: {documentInStages_some: {stage: DRAFT}}) {
     id
     headline
     name
@@ -10993,7 +10993,7 @@ export const CartGetByIdDocument = new TypedDocumentString(`
       size
     }
   }
-  reviews {
+  reviews(where: {documentInStages_some: {stage: DRAFT}}) {
     id
     headline
     name
@@ -11099,7 +11099,7 @@ export const ProductGetByIdDocument = new TypedDocumentString(`
       size
     }
   }
-  reviews {
+  reviews(where: {documentInStages_some: {stage: DRAFT}}) {
     id
     headline
     name
@@ -11146,7 +11146,7 @@ export const ProductRelatedGetListDocument = new TypedDocumentString(`
       size
     }
   }
-  reviews {
+  reviews(where: {documentInStages_some: {stage: DRAFT}}) {
     id
     headline
     name
@@ -11204,7 +11204,7 @@ export const ProductsGetByCategorySlugDocument = new TypedDocumentString(`
       size
     }
   }
-  reviews {
+  reviews(where: {documentInStages_some: {stage: DRAFT}}) {
     id
     headline
     name
@@ -11255,7 +11255,7 @@ export const ProductsGetByCollectionSlugDocument = new TypedDocumentString(`
       size
     }
   }
-  reviews {
+  reviews(where: {documentInStages_some: {stage: DRAFT}}) {
     id
     headline
     name
@@ -11302,7 +11302,7 @@ export const ProductsGetListDocument = new TypedDocumentString(`
       size
     }
   }
-  reviews {
+  reviews(where: {documentInStages_some: {stage: DRAFT}}) {
     id
     headline
     name
@@ -11349,7 +11349,7 @@ export const ProductsGetListWithPaginationDocument = new TypedDocumentString(`
       size
     }
   }
-  reviews {
+  reviews(where: {documentInStages_some: {stage: DRAFT}}) {
     id
     headline
     name
@@ -11396,7 +11396,7 @@ export const ProductsSearchGetListDocument = new TypedDocumentString(`
       size
     }
   }
-  reviews {
+  reviews(where: {documentInStages_some: {stage: DRAFT}}) {
     id
     headline
     name
