@@ -1,9 +1,11 @@
 import React from "react";
 import Link from "next/link";
 import { ShoppingCartIcon } from "lucide-react";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { SearchOnPage } from "../atoms/SearchOnPage";
 import { ActiveLink } from "@/ui/atoms/ActiveLink";
 import { getCartFromCookies } from "@/api/cart";
+
 
 export async function Navigation() {
 	// const { categories } = await executeGraphql({ query: CategoriesGetListDocument });
@@ -50,7 +52,7 @@ export async function Navigation() {
 					))}
 				</ul>
 			</nav>
-			<div className="flex gap-4">
+			<div className="flex gap-4 items-center">
 				<SearchOnPage />
 
 				<Link href="/cart/sidebar">
@@ -59,6 +61,12 @@ export async function Navigation() {
 						<span className="ml-1">{quantity}</span>
 					</div>
 				</Link>
+				<SignedIn>
+					<UserButton userProfileMode="navigation" /* appearance={clerkAppearance} */ />
+				</SignedIn>
+				<SignedOut>
+					<SignInButton />
+				</SignedOut>
 			</div>
 		</header>
 	);

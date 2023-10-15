@@ -12,7 +12,7 @@ export function SearchOnPage() {
 
 	return (
 		<input
-			className="px-2 text-black"
+			className="px-2 py-1 text-black"
 			type="search"
 			onChange={(e) => debouncedSearch(e.target.value)}
 		/>
